@@ -1,4 +1,4 @@
-package Generating
+package generating
 
 import (
 	"math/rand"
