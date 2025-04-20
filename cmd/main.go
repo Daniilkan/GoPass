@@ -1,15 +1,15 @@
 package main
 
 import (
-	"GoPass/internal/DataBase"
-	"GoPass/internal/Generating"
-	"GoPass/internal/Vault"
+	"GoPass/pkg/crypt"
+	"GoPass/pkg/database"
+	"GoPass/pkg/generating"
 	"fmt"
 )
 
 func main() {
 	_ = database.InitDataBase()
-	fmt.Println("Hello! It's Password Vault, you can choose write or read or clear password using 0/1/2 or type exit")
+	fmt.Println("Hello! It's Password crypt, you can choose write or read or clear password using 0/1/2 or type exit")
 	for {
 		choice := ""
 		fmt.Scanln(&choice)
@@ -30,14 +30,14 @@ func main() {
 					continue
 				}
 				fmt.Println("Your password is added:", password)
-				password, _ = vault.Encrypt(password, []byte("absolute cinemas"))
+				password, _ = crypt.Encrypt(password, []byte("absolute cinemas"))
 				_ = database.AddPassWord(service, password)
 			case "1":
 				fmt.Println("Please enter service in one line")
 				service := ""
 				fmt.Scanln(&service)
 				pass, _ := database.GetPassWord(service)
-				pass, _ = vault.Decrypt(pass, []byte("absolute cinemas"))
+				pass, _ = crypt.Decrypt(pass, []byte("absolute cinemas"))
 				if len(pass) == 0 {
 					fmt.Println("Your password is empty")
 				} else {
